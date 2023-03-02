@@ -4,6 +4,7 @@ import 'package:english_words/english_words.dart';
 void main() {
   runApp(const MyApp());
 }
+
 //comment
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -12,11 +13,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.lightBlue,
-          foregroundColor: Colors.black,
-        )
-      ),
+          appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.lightBlue,
+        foregroundColor: Colors.black,
+      )),
       debugShowCheckedModeBanner: false,
       home: const RandomWords(),
     );
@@ -34,30 +34,29 @@ class _RandomWordsState extends State<RandomWords> {
   final _suggestions = <WordPair>[];
   final _saved = <WordPair>{};
   final _biggerFont = const TextStyle(fontSize: 18);
-
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
-     appBar: AppBar(
-       title : const Text ('Startup Name Generator'),
-       actions: [
-         IconButton(
-             icon: const Icon(Icons.list),
-           onPressed: _pushSaved,
-           tooltip: 'Saved Suggestions',
-         )
-       ],
-     ),
-     body: _buildSuggestions(),
-   );
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Startup Name Generator'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.list),
+            onPressed: _pushSaved,
+            tooltip: 'Saved Suggestions',
+          )
+        ],
+      ),
+      body: _buildSuggestions(),
+    );
   }
 
-  void _pushSaved(){
+  void _pushSaved() {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (context) {
           final tiles = _saved.map(
-                (pair) {
+            (pair) {
               return ListTile(
                 title: Text(
                   pair.asPascalCase,
@@ -68,9 +67,9 @@ class _RandomWordsState extends State<RandomWords> {
           );
           final divided = tiles.isNotEmpty
               ? ListTile.divideTiles(
-            context: context,
-            tiles: tiles,
-          ).toList()
+                  context: context,
+                  tiles: tiles,
+                ).toList()
               : <Widget>[];
 
           return Scaffold(
@@ -83,7 +82,6 @@ class _RandomWordsState extends State<RandomWords> {
       ),
     );
   }
-
 
   Widget _buildSuggestions() {
     return ListView.builder(
@@ -99,10 +97,10 @@ class _RandomWordsState extends State<RandomWords> {
         // in the ListView.
         if (i.isOdd) {
           return const Divider(
-             thickness: 1,
-             indent: 15,
-             endIndent: 10,
-             // color: Colors.black,
+            thickness: 1,
+            indent: 15,
+            endIndent: 10,
+            // color: Colors.black,
           );
         }
 
@@ -123,6 +121,7 @@ class _RandomWordsState extends State<RandomWords> {
       },
     );
   }
+
   Widget _buildRow(WordPair pair) {
     final alreadySaved = _saved.contains(pair);
     return ListTile(
@@ -132,21 +131,18 @@ class _RandomWordsState extends State<RandomWords> {
       ),
       trailing: Icon(
         alreadySaved ? Icons.favorite : Icons.favorite_border,
-        color:alreadySaved ? Colors.redAccent : null ,
-        semanticLabel:alreadySaved ? 'Remove from saved' : 'Save' ,
+        color: alreadySaved ? Colors.redAccent : null,
+        semanticLabel: alreadySaved ? 'Remove from saved' : 'Save',
       ),
       onTap: () {
-      setState(() {
-        if(alreadySaved) {
-          _saved.remove(pair);
-        }
-        else {
-          _saved.add(pair);
-        }
-      });
-    },
+        setState(() {
+          if (alreadySaved) {
+            _saved.remove(pair);
+          } else {
+            _saved.add(pair);
+          }
+        });
+      },
     );
   }
 }
-
-
